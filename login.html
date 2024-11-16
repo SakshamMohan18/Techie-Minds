@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="sign.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">LOGIN PAGE</div>
+    <div class="content">
+      <form id="registrationForm">
+        <div class="user-details">
+          <div class="input-box">
+            <label for="username" class="details">Username</label>
+            <input type="text" id="username" placeholder="Enter your username" required>
+          </div>
+          <div class="input-box">
+            <label for="password" class="details">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+          </div>
+        </div>
+        <div class="button">
+          <button type="button" id="loginButton" style="color: #fff;background: #ff3131;width: 1px;font-size: 18px;">Login</button>
+        </div>
+        <h5 style="text-align: center;">Don't have an account? <a href="Sign.html">SIGN UP</a></h5>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to handle login functionality
+    document.getElementById("loginButton").addEventListener("click", function () {
+      // Get the input values
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      // Check if the fields are empty
+      if (!username || !password) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      // If fields are filled, display success or process login logic
+      alert(`Welcome, ${username}! Login successful.`);
+
+      // Redirect to index.html
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+
+</html>

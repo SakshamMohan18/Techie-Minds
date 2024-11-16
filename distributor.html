@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorie Plan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative; /* Make sure content is positioned above the background */
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("bg2.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(2px); /* Apply blur effect */
+      z-index: -1; /* Ensure background stays behind content */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 25px;
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .container h2 {
+      font-size: 40px;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: black;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: black;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: black;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f1f8e9;
+      border-radius: 8px;
+      font-size: 16px;
+      color: black;
+    }
+
+    .result p {
+      margin: 5px 0;
+    }
+
+    .result b {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div> <!-- Blurred background -->
+
+  <div class="container">
+    <h2><b>CALORIE PLAN</b></h2>
+    <label for="calories">Calories</label>
+    <input type="number" id="calories" placeholder="Enter calories per day">
+
+    <label for="meals">Meals per day</label>
+    <select id="meals">
+      <option value="three">Three</option>
+      <option value="four">Four</option>
+    </select>
+    
+
+    <button onclick="calculateCalories()">Calculate</button>
+<a href="index.html"><button id="home" style="margin-top: 4px;">Home</button></a>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateCalories() {
+      const calories = parseFloat(document.getElementById('calories').value);
+      const meals = document.getElementById('meals').value;
+      const result = document.getElementById('result');
+
+      if (isNaN(calories) || calories <= 0) {
+        result.innerHTML = 'Please enter a valid calorie amount.';
+        return;
+      }
+
+      let output = '';
+
+      if (meals === 'three') {
+        const breakfast = (0.30 * calories).toFixed(0) + '-' + (0.35 * calories).toFixed(0);
+        const lunch = (0.35 * calories).toFixed(0) + '-' + (0.40 * calories).toFixed(0);
+        const dinner = (0.25 * calories).toFixed(0) + '-' + (0.35 * calories).toFixed(0);
+
+        output = `<p><b>Breakfast:</b> ${breakfast} kcal</p>
+                  <p><b>Lunch:</b> ${lunch} kcal</p>
+                  <p><b>Dinner:</b> ${dinner} kcal</p>`;
+      } else if (meals === 'four') {
+        const breakfast = (0.25 * calories).toFixed(0) + '-' + (0.30 * calories).toFixed(0);
+        const snack = (0.05 * calories).toFixed(0) + '-' + (0.10 * calories).toFixed(0);
+        const lunch = (0.35 * calories).toFixed(0) + '-' + (0.40 * calories).toFixed(0);
+        const dinner = (0.25 * calories).toFixed(0) + '-' + (0.30 * calories).toFixed(0);
+
+        output = `<p><b>Breakfast:</b> ${breakfast} kcal</p>
+                  <p><b>Morning Snack:</b> ${snack} kcal</p>
+                  <p><b>Lunch:</b> ${lunch} kcal</p>
+                  <p><b>Dinner:</b> ${dinner} kcal</p>`;
+      }
+
+      result.innerHTML = output;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+
+</head>
+
+<body>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #ff3131;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            margin-top: 0%;
+            max-width: auto;
+            height: 400px;
+        }
+
+        /* Section Headers */
+        h2 {
+            margin-top: 0;
+            color: #ff3131;
+        }
+
+        /* Food Items */
+
+        .food {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .food:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Plate Area */
+        #plate-section {
+            text-align: center;
+
+        }
+
+        #plate {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            border: 2px dashed#ff3131;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #666;
+            background-color: #fff;
+            margin-left: 200px;
+        }
+
+        /* Calorie Section */
+        #calorie-section {
+            margin: 10px 0;
+        }
+
+        .calorie-box {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .calorie-total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Modal */
+        .hidden {
+            display: none;
+        }
+
+        #quantity-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #ff5858;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #ff3131;
+        }
+
+        .box {
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background: linear-gradient(90deg, #ff4949, #ff9a51);
+        }
+
+        .meals {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .meal {
+            padding: 10px;
+            background: #ffecd2;
+            border: 2px solid #ff6f61;
+            width: 286px;
+            border-radius: 52px;
+        }
+
+
+        .container {
+            display: grid;
+            grid-template-columns: auto;
+            justify-content: center;
+            align-items: center;
+            background-image: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* filter: blur(px); */
+            margin-top: 0px;
+            height: 540px;
+
+
+        }
+
+        /* Plate Styles */
+        .plate {
+            width: 300px;
+            height: 300px;
+            border-radius: 4px;
+            background: radial-gradient(circle, #fdf7e3, #ecd6a6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            line-height: 300px;
+            font-size: 1.2rem;
+            color: #555;
+            margin-left: 200px;
+
+        }
+
+
+
+        .food {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border: 2px solid #fcb69f;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-right: 150px;
+            margin-left: 0px;
+        }
+
+        .food:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: linear-gradient(90deg, #ff4949, #ff9a51);
+            color: #fff;
+            padding: 6px;
+            text-align: center;
+        }
+    </style>
+    <header>
+        <h1>Interactive Metal Plate & Calorie tracker</h1>
+    </header>
+    <div class="container">
+        <div id="plate" class="plate"
+            style="position: relative;/*! left: -27px; */right: 503px;top: 108px;border-radius: 134px; opacity: 95%;">
+            <P>Drag food here</P>
+        </div>
+        <div class="food" draggable="true" data-name="Apple" data-calories="52" style="border-radius: 28px;
+            position: relative;
+            bottom: 160px;
+            left: 420px; opacity: 85%;">Apple (52
+            cal/100g)</div>
+        <div class="food" draggable="true" data-name="Banana" data-calories="89" style="border-radius: 28px;
+        position: relative;
+        bottom: 160px;
+        left: 380px;opacity: 85%;">Banana (89
+            cal/100g)</div>
+        <div class="food" draggable="true" data-name="Pizza" data-calories="266" style="border-radius: 28px;
+        position: relative;
+        bottom: 160px;
+        left: 340px; opacity: 85%;">Pizza (266
+            cal/100g)</div>
+        <div class="food" draggable="true" data-name="Pizza" data-calories="266" style="border-radius: 28px;
+            position: relative;
+            bottom: 160px;
+            left: 300px; opacity: 85%;">Soft Drinks(250
+            cal/100g)</div>
+        <div class="food" draggable="true" data-name="Pizza" data-calories="266" style="border-radius: 28px;
+        position: relative;
+        bottom: 160px;
+        left: 340px; opacity: 85%;">Rice (200
+            cal/100g)</div>
+        <div class="food" draggable="true" data-name="Pizza" data-calories="266" style="border-radius: 28px;
+        position: relative;
+        bottom: 160px;
+        left: 380px; opacity: 85%;">Chicken
+            (490 cal/100g)</div>
+        <div class="food" draggable="true" data-name="Others" data-calories="100" style="border-radius: 28px;
+        position: relative;
+        bottom: 160px;
+        left: 420px; opacity: 85%;">Others
+        </div>
+    </div>
+    <div class="box">
+        <h3 style="text-align: center; font-size: 20px;">Meal Calories</h3>
+        <div class="meals">
+            <div class="meal">
+                <p style="padding-left: 80px;font-size: 18px;">Breakfast: <span id="breakfast-calories" >0</span> cal</p>
+            </div>
+            <div class="meal">
+                <p style="padding-left: 80px;font-size: 18px;">Lunch: <span id="lunch-calories">0</span> cal</p>
+            </div>
+            <div class="meal">
+                <p style="padding-left: 80px;font-size: 18px;">Dinner: <span id="dinner-calories">0</span> cal</p>
+            </div>
+            <div class="meal">
+                <p style="padding-left: 80px;font-size: 18px;">Snacks: <span id="snacks-calories">0</span> cal</p>
+            </div>
+        </div>
+
+        <h4 style="text-align: center; font-size: 30px;">Total Calories: <span id="daily-total-calories">0</span> cal
+        </h4>
+
+    </div>
+
+    <div id="quantity-modal" class="hidden">
+        <h3 id="food-name"></h3>
+        <label for="quantity">Enter quantity (in grams):</label><br>
+        <input type="number" id="quantity" placeholder="e.g., 150" min="1"><br><br>
+
+        <label for="meal-select">Select Meal:</label>
+        <select id="meal-select">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snacks">Snacks</option>
+        </select><br><br>
+
+        <button id="add-to-meal">Add to Meal</button>
+        <button id="cancel-modal">Cancel</button>
+
+    </div>
+
+    <script>
+        let dailyCalories = {
+            breakfast: 0,
+            lunch: 0,
+            dinner: 0,
+            snacks: 0,
+        };
+
+        let draggedFood = null;
+
+        // Drag-and-Drop Setup
+        document.querySelectorAll(".food").forEach(food => {
+            food.addEventListener("dragstart", event => {
+                draggedFood = event.target;
+            });
+        });
+
+        const plate = document.getElementById("plate");
+
+        plate.addEventListener("dragover", event => {
+            event.preventDefault();
+        });
+
+        plate.addEventListener("drop", () => {
+            if (draggedFood) {
+                const foodName = draggedFood.dataset.name;
+                const foodCalories = parseFloat(draggedFood.dataset.calories);
+
+                // Show the modal for quantity and meal selection
+                document.getElementById("food-name").textContent = `Selected Food: ${foodName}`;
+                document.getElementById("quantity-modal").classList.remove("hidden");
+
+                document.getElementById("add-to-meal").onclick = () => {
+                    const quantity = parseInt(document.getElementById("quantity").value);
+                    const mealType = document.getElementById("meal-select").value;
+
+                    if (!quantity || quantity <= 0) {
+                        alert("Please enter a valid quantity.");
+                        return;
+                    }
+
+                    const calories = (foodCalories * quantity) / 100;
+
+                    // Update calories for the selected meal
+                    dailyCalories[mealType] += calories;
+
+                    // Update UI
+                    document.getElementById(`${mealType}-calories`).textContent = dailyCalories[mealType].toFixed(2);
+                    document.getElementById("daily-total-calories").textContent = Object.values(dailyCalories)
+                        .reduce((sum, cal) => sum + cal, 0)
+                        .toFixed(2);
+
+                    // Provide calorie feedback
+                    const totalCalories = Object.values(dailyCalories).reduce((sum, cal) => sum + cal, 0);
+                    if (totalCalories > 3000) {
+                        alert("YOU HAVE REACH THE MAXIMUM CALORIE LIMIT!!");
+                    } /*else if (totalCalories >= 1000 && totalCalories <= 2500) {
+                        alert("CORRECT CALORIE");
+                    } else {
+                        alert("HIGH CALORIE");
+                    }*/
+
+                    // Hide modal and reset input
+                    document.getElementById("quantity-modal").classList.add("hidden");
+                    document.getElementById("quantity").value = "";
+                };
+            }
+        });
+
+        // Cancel Modal
+        document.getElementById("cancel-modal").onclick = () => {
+            document.getElementById("quantity-modal").classList.add("hidden");
+            document.getElementById("quantity").value = "";
+        };
+    </script>
+</body>
+
+</html>

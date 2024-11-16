@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Calculator with Water Intake</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .water-container {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .water-container input {
+            width: 100px;
+            padding: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .water-container button {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .water-container button:hover {
+            background-color: #0056b3;
+        }
+        .water-progress {
+            margin-top: 10px;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+        }
+        .water-progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+
+
+        <div class="water-container">
+            <h3>Water Intake Tracker</h3>
+            <p>Daily Water Goal: <strong>8 cups</strong></p>
+            <input type="number" id="water-input" placeholder="Enter cups" min="0" step="1">
+            <button onclick="updateWaterIntake()">Update Water Intake</button>
+            <div class="water-progress">
+                <div id="water-progress-bar" class="water-progress-bar"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const waterGoalCups = 8; // Daily water intake goal in cups
+        let currentWaterIntake = 0;
+
+        // Function to update the water intake
+        function updateWaterIntake() {
+            const input = document.getElementById('water-input').value;
+            if (input && input >= 0) {
+                // Update current intake in cups
+                currentWaterIntake = parseFloat(input);
+                document.getElementById('water-input').value = ''; // Clear input field
+                updateWaterProgress();
+            } else {
+                alert("Please enter a valid water intake value.");
+            }
+        }
+
+        // Function to update the water progress bar
+        function updateWaterProgress() {
+            const progressBar = document.getElementById('water-progress-bar');
+            const percentage = Math.min((currentWaterIntake / waterGoalCups) * 100, 100); // Ensure it does not exceed 100%
+            progressBar.style.width = percentage + '%';
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+

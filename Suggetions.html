@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+</head>
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    padding: 10px;
+    font-size: 1rem;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color:#fd5151;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff3131;
+}
+
+.frames {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.frame {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.recipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.recipe img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.recipe-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.recipe-details h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #34495e;
+}
+
+.recipe-details p {
+    color: #7f8c8d;
+}
+
+@media (max-width: 768px) {
+    .frames {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .frame {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Recipe Finder</h1>
+        <input type="number" id="calorieLimit" placeholder="Enter Calorie Limit (kcal)" />
+        <button onclick="fetchRecipes()">Search Recipes</button>
+        <div class="frames">
+            <div class="frame" id="frame1">
+                <h2>Indian Subcontinent Recipes</h2>
+                <div id="result1"></div>
+            </div>
+            <div class="frame" id="frame2">
+                <h2>Angolan Recipes</h2>
+                <div id="result2"></div>
+            </div>
+            <div class="frame" id="frame3">
+                <h2>African Recipes</h2>
+                <div id="result3"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+     const apiUrls = [
+    "https://cosylab.iiitd.edu.in/recipe-search/regions?searchText=Indian%20Subcontinent&pageSize=10",
+    "https://cosylab.iiitd.edu.in/recipe-search/sub-regions?searchText=Angolan&pageSize=10",
+    "https://cosylab.iiitd.edu.in/recipe-search/continents?searchText=African&pageSize=10"
+];
+
+function fetchRecipes() {
+    const calorieLimit = document.getElementById("calorieLimit").value;
+
+    // Validate calorie limit input
+    if (!calorieLimit || isNaN(calorieLimit) || calorieLimit <= 0) {
+        alert("Please enter a valid calorie limit.");
+        return;
+    }
+
+    // Clear previous results
+    document.getElementById('result1').innerHTML = '';
+    document.getElementById('result2').innerHTML = '';
+    document.getElementById('result3').innerHTML = '';
+
+    // Fetch and display recipes for each API
+    fetchDataAndDisplay(apiUrls[0], 'result1', calorieLimit);
+    fetchDataAndDisplay(apiUrls[1], 'result2', calorieLimit);
+    fetchDataAndDisplay(apiUrls[2], 'result3', calorieLimit);
+}
+
+function fetchDataAndDisplay(apiUrl, resultId, calorieLimit) {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Log the entire data to see the JSON structure
+            console.log("API Response Data:", JSON.stringify(data, null, 2)); // Pretty print JSON
+
+            // Check if the data contains payload and the 'data' array
+            if (data && data.payload && Array.isArray(data.payload.data)) {
+                console.log("Data fetched successfully for:", apiUrl);
+                const recipes = data.payload.data.filter(recipe => {
+                    // Ensure the 'Energy (kcal)' field exists and is a valid number
+                    const calories = parseFloat(recipe["Calories"]);
+                    return !isNaN(calories) && calories < calorieLimit;
+                });
+                displayRecipes(recipes, resultId);
+            } else {
+                // Log error if the structure is not as expected
+                console.error('Unexpected data format:', data);
+                throw new Error('Invalid data format or missing "payload.data" property.');
+            }
+        })
+        .catch(error => {
+            // Handle any error during fetch or processing
+            console.error("Error fetching data for:", apiUrl, error);
+            document.getElementById(resultId).innerHTML = 'Error fetching data: ' + error.message;
+        });
+}
+
+function displayRecipes(recipes, resultId) {
+    const resultContainer = document.getElementById(resultId);
+
+    if (recipes.length === 0) {
+        resultContainer.innerHTML = "<p>No recipes found within the calorie limit.</p>";
+        return;
+    }
+
+    recipes.forEach(recipe => {
+        const recipeDiv = document.createElement('div');
+        recipeDiv.classList.add('recipe');
+
+        recipeDiv.innerHTML = `
+            <img src="${recipe.img_url}" alt="${recipe.Recipe_title}" />
+            <div class="recipe-details">
+                <h3><a href="${recipe.url}" target="_blank">${recipe.Recipe_title}</a></h3>
+                <p><strong>Servings:</strong> ${recipe.servings}</p>
+                <p><strong>Cook Time:</strong> ${recipe.cook_time} minutes</p>
+                <p><strong>Calories:</strong> ${recipe.Calories}</p>
+            </div>
+        `;
+
+        resultContainer.appendChild(recipeDiv);
+    });
+}
+
+    </script>
+</body>
+</html>

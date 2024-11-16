@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour & Travel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+
+</head>
+<style>
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: 0.2s linear;
+}
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+section {
+  padding: 5rem 9%;
+}
+.btn {
+  margin-top: 1rem;
+  display: inline-block;
+  border: 0.2rem solid black;
+  color: black;
+  cursor: pointer;
+  background: none;
+  font-size: 1.7rem;
+  padding: 1rem 3rem;
+  border-radius: 40px;
+}
+.btn:hover {
+  background: black;
+  color: white;
+}
+.heading {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 4rem;
+  color: #10221b;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 9%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+.header.active {
+  background: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.header .logo {
+  margin-right: auto;
+  font-size: 2.5rem;
+  color: black;
+  font-weight: bolder;
+}
+.wrapper1 {
+  background: linear-gradient(90deg, #ff4949, #ff9a51);
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 550px;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(70, 70, 70, 0.6);
+}
+
+.wrapper1 .title1 h1 {
+  color:#ffffff;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 3.5rem;
+}
+
+</style>
+<body>
+    <header class="header" style="height: 80px;">
+        <img href="#" class="logo"><img src="WhatsApp_Image_2024-11-15_at_18.12.45_a0465646-removebg-preview.png"
+            alt="#" style="height: 144px;position: relative;right: 1010px; "></a>
+        <nav class="navbar">
+            <div id="nav-close" class="fas fa-times"></div>
+            <a href="index.html" target="_blank">home</a>
+            <a href="#category">Features</a>
+            <a href="#packages">Meals</a>
+            <a href="#contact">Support</a>
+            <a href="http://127.0.0.1:5500/tour-project/Tour-Project/login.html">Login</a>
+            <!-- <a href="http://127.0.0.1:5500/tour-project/Tour-Project/Sign.html">Sign Up</a> -->
+
+        </nav>
+        <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+
+        </div>
+    </header>
+
+    <div class="search-form">
+        <div id="close-search" class="fas fa-times"></div>
+        <form action="">
+            <input type="search" name="" placeholder="search here..." id="search-box">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+    </div>
+    
+</body>
+<script>
+    let navbar = document.querySelector('.header .navbar');
+document.querySelector('#menu-btn').onclick = () =>{
+    navbar.classList.add('active');
+}
+document.querySelector('#nav-close').onclick = () =>{
+    navbar.classList.remove('active');
+}
+
+let searchForm = document.querySelector('.search-form');
+
+document.querySelector('#search-btn').onclick = () =>{
+    searchForm.classList.add('active');
+}
+
+document.querySelector('#close-search').onclick = () =>{
+    searchForm.classList.remove('active');
+}
+window.onscroll=()=>{
+    navbar.classList.remove('active');
+    if(window.scrollY>0){
+        document.querySelector('.header').classList.add('active');
+    }else{
+        document.querySelector('.header').classList.remove('active');
+    }
+};
+window.onload=()=>{
+    if(window.scrollY>0){
+        document.querySelector('.header').classList.add('active');
+    }else{
+        document.querySelector('.header').classList.remove('active');
+    }}
+</script>
+    </html>
